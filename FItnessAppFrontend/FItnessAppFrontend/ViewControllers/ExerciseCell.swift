@@ -55,7 +55,7 @@ class ExerciseCell: UITableViewCell {
             
     }()
     
-    let weight:UILabel={
+    let time:UILabel={
         let label=UILabel()
         label.text="20 kg"
         label.translatesAutoresizingMaskIntoConstraints=false
@@ -118,15 +118,28 @@ class ExerciseCell: UITableViewCell {
         super.backgroundColor = UIColor(red: 0.13, green: 0.13, blue: 0.12, alpha: 1.00)
         addComponents()
         addConstraints()
+        
+        exerciseBtn.addTarget(self, action: #selector(viewDetails), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func viewDetails(){
+        
+//        let exDetailsVC=ExerciseDetailsViewController()
+//        let navigationController = UINavigationController.self
+//        navigationController.pushViewController(exDetailsVC, animated: true)
+    }
+    
     func set (exercise:Exercise){
-        ExerciseImage.image=exercise.image
-        exeriseName.text=exercise.title
+        ExerciseImage.image = .init(UIImage(named: "pushups")!)
+        exeriseName.text=exercise.name
+        setsCount.text="\(exercise.sets) sets"
+        repsCount.text="\(exercise.reps) reps"
+        time.text=exercise.time ?? ""
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -137,7 +150,7 @@ class ExerciseCell: UITableViewCell {
         
         hstack1.addArrangedSubview(setsCount)
         hstack1.addArrangedSubview(repsCount)
-        hstack1.addArrangedSubview(weight)
+        hstack1.addArrangedSubview(time)
         
         vstack.addArrangedSubview(exeriseName)
         vstack.addArrangedSubview(hstack1)

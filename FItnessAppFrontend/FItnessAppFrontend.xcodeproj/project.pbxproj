@@ -23,6 +23,8 @@
 		E63935442A154C7D0070459E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63935432A154C7D0070459E /* AVFoundation.framework */; };
 		E63935462A154C890070459E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63935452A154C890070459E /* WebKit.framework */; };
 		E63935482A154D660070459E /* YouTubePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63935472A154D660070459E /* YouTubePlayerViewController.swift */; };
+		E639354E2A160DDA0070459E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639354D2A160DDA0070459E /* UserModel.swift */; };
+		E63935502A16192B0070459E /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639354F2A16192B0070459E /* ExerciseModel.swift */; };
 		E67DA1BB2A0F0D8300036BA8 /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1BA2A0F0D8300036BA8 /* GetStartedViewController.swift */; };
 		E67DA1BF2A0F230300036BA8 /* ConfigureNavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1BE2A0F230300036BA8 /* ConfigureNavBarViewController.swift */; };
 		E67DA1C22A11106D00036BA8 /* SecondGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1C12A11106D00036BA8 /* SecondGetStartedViewController.swift */; };
@@ -50,6 +52,8 @@
 		E63935452A154C890070459E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E63935472A154D660070459E /* YouTubePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerViewController.swift; sourceTree = "<group>"; };
 		E63935492A154EE80070459E /* youtube-ios-player-helper-master */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "youtube-ios-player-helper-master"; path = "FItnessAppFrontend/youtube-ios-player-helper-master"; sourceTree = "<group>"; };
+		E639354D2A160DDA0070459E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		E639354F2A16192B0070459E /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
 		E67DA1BA2A0F0D8300036BA8 /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
 		E67DA1BE2A0F230300036BA8 /* ConfigureNavBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureNavBarViewController.swift; sourceTree = "<group>"; };
 		E67DA1C12A11106D00036BA8 /* SecondGetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondGetStartedViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				E639350A2A1379D20070459E /* Exercise.swift */,
+				E639354D2A160DDA0070459E /* UserModel.swift */,
+				E639354F2A16192B0070459E /* ExerciseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -227,7 +233,9 @@
 				E63935032A1355530070459E /* UIView+EXtension.swift in Sources */,
 				E639350D2A1503AF0070459E /* DailyExerciseListVC.swift in Sources */,
 				E63935052A1359180070459E /* ExerciseCell.swift in Sources */,
+				E63935502A16192B0070459E /* ExerciseModel.swift in Sources */,
 				E63871C12A0C82780045516A /* AppDelegate.swift in Sources */,
+				E639354E2A160DDA0070459E /* UserModel.swift in Sources */,
 				E63871C32A0C82780045516A /* SceneDelegate.swift in Sources */,
 				E67DA1C62A11A90D00036BA8 /* CalendarViewController.swift in Sources */,
 				E67DA1C42A1121FF00036BA8 /* ResultsViewController.swift in Sources */,

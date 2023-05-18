@@ -7,25 +7,34 @@
 
 import Foundation
 
-struct WorkoutList: Codable{
-    let exercises:[Workout]
+struct Workouts: Codable {
+    let status: Int
+    let data: [Exercise]
 }
 
-struct Workout: Codable{
-    let manualId:String
+struct Exercise: Codable{
+    let m_id:String
     let name:String
-    let sets:Int?
-    let reps:Int?
+    let sets:Int
+    let reps:Int
     let type:String
     let gender:String
     let category:String
     let time:String?
     let videoLink:String?
-    let image:Data?
+    let image:String?
 
 }
 
-
-
-
-//{"_id":{"$oid":"6465e05471c7d37dbeb55ac8"},"m_id":"12","name":"Jogging or Running","sets":{"$numberInt":"0"},"reps":{"$numberInt":"0"},"type":"fl","gender":"male","category":"cardio","time":"45 mins"}
+//{"_id":{"$oid":"6465ddd771c7d37dbeb55abe"},
+//    "name":"Squats",
+//    "sets":{"$numberInt":"3"},
+//    "reps":{"$numberInt":"15"},
+//    "type":"wg",
+//    "gender":"female",
+//    "category":"bodyweight",
+//    "m_id":"2",
+//    "time":"",
+//    "image":"",
+//    "videoLink":""
+//}

@@ -31,7 +31,7 @@ class DailyExerciseListVC: UIViewController {
         return stack
 
     }()
-    
+
     let titleLabel:UILabel={
         let label=UILabel()
         label.text="Day 01 - Routine"
@@ -41,7 +41,7 @@ class DailyExerciseListVC: UIViewController {
         label.textColor = .orange
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+
     }()
 
         override func viewDidLoad() {
@@ -51,9 +51,55 @@ class DailyExerciseListVC: UIViewController {
             addComponents()
             addConstraints()
 
-            exercise=fetchData()//populate array with image list
+            let anonymousFunction={
+                (fetchedExerciseList:[Exercise]) in
+                DispatchQueue.main.async {
+                    self.exercise = fetchedExerciseList
+                    self.tableView.reloadData()
+                }
+            }
+            
+            fetchDataFromApi(onCompletion: anonymousFunction)
+            
+    //        exercise=fetchData()//populate array with image list
             configureTableView()
+        
         }
+    
+    func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
+        let urlSring="http://localhost:8080/exercises/"
+        guard let url=URL(string: urlSring) else{
+            print("error getting url")
+            return
+        }
+        
+        //request to url - task+urlsession
+        let task=URLSession.shared.dataTask(with: url){
+            (data, res, error) in
+            
+            print(String(data: data!, encoding: .utf8))
+            
+            //check if data is nill
+            guard let data = data else{
+                print("data is nil")
+                return
+            }
+
+            
+            //decode json data
+            guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
+            else{
+                print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
+                            return
+            }
+            
+            print(workoutsResponse.data)
+            onCompletion(workoutsResponse.data)
+            
+        }
+        task.resume()
+    }
+    
 
 
         func configureTableView(){
@@ -81,11 +127,11 @@ class DailyExerciseListVC: UIViewController {
         }
 
         func addConstraints(){
-            
+
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive=true
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
-            
+
             vstack2.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive=true
             vstack2.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
             vstack2.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
@@ -146,14 +192,14 @@ class DailyExerciseListVC: UIViewController {
 
     }
 
-    //dummy data
-    extension DailyExerciseListVC{
-        func fetchData()->[Exercise]{
-            let img1=Exercise(image: Images.img1!, title: "Star Jumps")
-            let img2=Exercise (image: Images.img2!, title: "Ex2")
-
-            return[img1,img2]
-        }
-    }
+//    //dummy data
+//    extension DailyExerciseListVC{
+//        func fetchData()->[Exercise]{
+//            let img1=Exercise(image: Images.img1!, title: "Star Jumps")
+//            let img2=Exercise (image: Images.img2!, title: "Ex2")
+//
+//            return[img1,img2]
+//        }
+//    }
 
 

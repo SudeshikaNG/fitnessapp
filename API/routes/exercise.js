@@ -8,6 +8,21 @@ router.use(bodyParser.urlencoded({extended:false}))
 
 const Exercise=require('../models/exerciseModel')
 
+
+//get exercise data - all
+router.get('/', async(req, res)=>{
+     console.log("inside exercise get")
+
+    try{
+         const exerciseDetails=await Exercise.find()
+         res.status(200).json({status:200, data:exerciseDetails})
+         console.log(exerciseDetails)
+    }catch(error){
+         res.send("error occured: "+ error)
+         console.log(error)
+    }
+ })
+
 //get exercise data
 router.get('/:category', async(req, res)=>{
     console.log("inside exercise get")

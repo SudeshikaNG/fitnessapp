@@ -8,11 +8,12 @@
 import UIKit
 
 class ExerciseListVC: UIViewController {
+    
     let navBar = UINavigationBar()
 
     var tableView = UITableView()
     
-    var exercise : [Exercise]=[]
+    var exercise = [Exercise]()
     
     struct Cells{
         static let exerciseCell="ExerciseCell"
@@ -58,11 +59,55 @@ let vstack2:UIStackView={
         addComponents()
         addConstraints()
         
-        exercise=fetchData()//populate array with image list
+        let anonymousFunction={
+            (fetchedExerciseList:[Exercise]) in
+            DispatchQueue.main.async {
+                self.exercise = fetchedExerciseList
+                self.tableView.reloadData()
+            }
+        }
+        
+        fetchDataFromApi(onCompletion: anonymousFunction)
+        
+//        exercise=fetchData()//populate array with image list
         configureTableView()
         
         calendarBtn.addTarget(self, action: #selector(navigateCalendar), for: .touchUpInside)
         
+    }
+    
+    func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
+        let urlSring="http://localhost:8080/exercises/"
+        guard let url=URL(string: urlSring) else{
+            print("error getting url")
+            return
+        }
+        
+        //request to url - task+urlsession
+        let task=URLSession.shared.dataTask(with: url){
+            (data, res, error) in
+            
+            print(String(data: data!, encoding: .utf8))
+            
+            //check if data is nill
+            guard let data = data else{
+                print("data is nil")
+                return
+            }
+
+            
+            //decode json data
+            guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
+            else{
+                print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
+                            return
+            }
+            
+            print(workoutsResponse.data)
+            onCompletion(workoutsResponse.data)
+            
+        }
+        task.resume()
     }
     
 
@@ -175,13 +220,13 @@ extension ExerciseListVC:UITableViewDelegate, UITableViewDataSource{
     
 }
 
-//dummy data
-extension ExerciseListVC{
-    func fetchData()->[Exercise]{
-        let img1=Exercise(image: Images.img1!, title: "Star Jumps")
-        let img2=Exercise (image: Images.img2!, title: "Ex2")
-        
-        return[img1,img2]
-    }
-}
+////dummy data
+//extension ExerciseListVC{
+//    func fetchData()->[Exercise]{
+//        let img1=Exercise(image: Images.img1!, title: "Star Jumps")
+//        let img2=Exercise (image: Images.img2!, title: "Ex2")
+//
+//        return[img1,img2]
+//    }
+//}
 

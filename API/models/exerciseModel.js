@@ -19,11 +19,11 @@ const exerciseSchema=new mongoose.Schema({
     time:{
         type:Number
     },
-    video:{
-        type:video,
+    videoLink:{
+        type:String,
         required:true
     },
-    effectivePart:{
+    image:{
         data:Buffer,
         type:String,
         required:true

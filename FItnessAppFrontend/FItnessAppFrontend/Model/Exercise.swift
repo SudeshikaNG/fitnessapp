@@ -1,13 +1,13 @@
+////
+////  File.swift
+////  FItnessAppFrontend
+////
+////  Created by Sudeshika Gunawardena on 2023-05-16.
+////
 //
-//  File.swift
-//  FItnessAppFrontend
+//import UIKit
 //
-//  Created by Sudeshika Gunawardena on 2023-05-16.
-//
-
-import UIKit
-
-struct Exercise{
-    var image:UIImage
-    var title:String
-}
+//struct Exercise{
+//    var image:UIImage
+//    var title:String
+//}
