@@ -67,7 +67,7 @@ class DailyExerciseListVC: UIViewController {
         }
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
-        let urlSring="http://localhost:8080/exercises/"
+        let urlSring="http://localhost:8080/exercises/fl/male/cardio"
         guard let url=URL(string: urlSring) else{
             print("error getting url")
             return

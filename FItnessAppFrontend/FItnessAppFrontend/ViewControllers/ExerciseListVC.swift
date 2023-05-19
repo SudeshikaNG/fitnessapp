@@ -77,7 +77,7 @@ let vstack2:UIStackView={
     }
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
-        let urlSring="http://localhost:8080/exercises/"
+        let urlSring="http://localhost:8080/exercises"
         guard let url=URL(string: urlSring) else{
             print("error getting url")
             return
@@ -215,6 +215,16 @@ extension ExerciseListVC:UITableViewDelegate, UITableViewDataSource{
         cell.layer.borderColor = UIColor.gray.cgColor
         cell.layer.borderWidth = 0.5
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //passing data
+        let exerciseData=exercise[indexPath.row]
+        //navigate
+        let exDetailsVC = ExerciseDetailsViewController()
+        exDetailsVC.exerciseData=exerciseData
+        navigationController?.pushViewController(exDetailsVC, animated: true)
     }
     
     

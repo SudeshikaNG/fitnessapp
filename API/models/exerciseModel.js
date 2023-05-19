@@ -17,17 +17,21 @@ const exerciseSchema=new mongoose.Schema({
         required:true
     },
     time:{
-        type:Number
+        type:Number,
+        required:true
     },
     videoLink:{
         type:String,
         required:true
     },
     image:{
-        data:Buffer,
         type:String,
         required:true
-    }	
+    },
+    effPart:{
+        type:String,
+        require:true
+    }
 }
 ,{ collection: 'exercises' })
 

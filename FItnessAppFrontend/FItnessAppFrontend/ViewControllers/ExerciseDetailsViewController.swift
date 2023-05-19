@@ -9,6 +9,9 @@ import UIKit
 
 class ExerciseDetailsViewController: UIViewController {
     
+    //data from exercise list vc
+    var exerciseData:Exercise!
+    
         private var countdownTimer: Timer?
         private var remainingSeconds = 10
 
@@ -68,7 +71,7 @@ class ExerciseDetailsViewController: UIViewController {
         let stack=UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints=false
         stack.axis = .vertical
-        stack.spacing=50
+        stack.spacing=100
         stack.distribution = .equalSpacing
         stack.backgroundColor = .white
         stack.isLayoutMarginsRelativeArrangement = true
@@ -89,12 +92,12 @@ class ExerciseDetailsViewController: UIViewController {
             
     }()
          
-        let headImage:UIImageView={
-            let image=UIImageView()
+        let headImage:ExerciseImageLoad={
+            let image=ExerciseImageLoad()
             image.translatesAutoresizingMaskIntoConstraints=false
             image.contentMode = .scaleAspectFit
             image.clipsToBounds=true
-            image.image = .init(named: "stareff")
+//            image.image = .init(named: "stareff")
             return image
             }()
         
@@ -134,18 +137,6 @@ class ExerciseDetailsViewController: UIViewController {
             
     }()
     
-    let weightLabel:UILabel={
-        let label=UILabel()
-        label.text="Weight : 2kg"
-        label.translatesAutoresizingMaskIntoConstraints=false
-        label.textAlignment = .center
-        label.font=UIFont.systemFont(ofSize: 20, weight: .thin)
-        label.textColor = .orange
-        label.adjustsFontSizeToFitWidth=true
-        return label
-            
-    }()
-    
     let durationLabel:UILabel={
         let label=UILabel()
         label.text="Time : 10 seconds"
@@ -169,13 +160,35 @@ class ExerciseDetailsViewController: UIViewController {
             
             timerBtn.addTarget(self, action: #selector(startTimer), for: .touchUpInside)
             pauseBtn.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+            
+            setExerciseData()
 
         }
     
         /////////////////////////////////////////////////////////////new codes///////////////////////////////////////////////////////////////////////////
+    
+    func setExerciseData(){
+        titleLabel.text = exerciseData?.name
+        
+        if let url=URL(string: exerciseData!.effPart){
+            headImage.loadImage(from: url)
+        }
+        
+        setsLabel.text="Sets : \(exerciseData.sets)"
+        repsLabel.text="Reps : \(exerciseData.reps)"
+        
+        if(exerciseData.time > 60){
+            durationLabel.text = "Time : \(exerciseData.time/60) mins"
+        }else{
+            durationLabel.text="Time : \(exerciseData.time) seconds "
+        }
+        
+        remainingSeconds=exerciseData.time
+        
+    }
         
     @objc func playButtonClicked() {
-        guard let videoURL = URL(string: "https://youtu.be/lTbQQmpMZv4") else {
+        guard let videoURL = URL(string: exerciseData.videoLink!) else {
             // Handle invalid URL
             print("invalid url")
             return
@@ -245,7 +258,6 @@ class ExerciseDetailsViewController: UIViewController {
             vstack2.addArrangedSubview(videoBtn)
             vstack2.addArrangedSubview(repsLabel)
             vstack2.addArrangedSubview(setsLabel)
-            vstack2.addArrangedSubview(weightLabel)
             vstack2.addArrangedSubview(durationLabel)
             vstack2.addArrangedSubview(timerBtn)
             
@@ -279,10 +291,9 @@ class ExerciseDetailsViewController: UIViewController {
             countdownLabel.leadingAnchor.constraint(equalTo: hstack.leadingAnchor,constant: 2).isActive=true
             
             repsLabel.topAnchor.constraint(equalTo: videoBtn.bottomAnchor, constant: 40).isActive=true
-            setsLabel.topAnchor.constraint(equalTo: repsLabel.bottomAnchor, constant: 20).isActive=true
-            weightLabel.topAnchor.constraint(equalTo: setsLabel.bottomAnchor, constant: 20).isActive=true
-            durationLabel.topAnchor.constraint(equalTo: weightLabel.bottomAnchor, constant: 20).isActive=true
-            timerBtn.topAnchor.constraint(equalTo: durationLabel.bottomAnchor, constant: 40).isActive=true
+            setsLabel.topAnchor.constraint(equalTo: repsLabel.bottomAnchor, constant: 50).isActive=true
+            durationLabel.topAnchor.constraint(equalTo: setsLabel.bottomAnchor, constant: 50).isActive=true
+            timerBtn.topAnchor.constraint(equalTo: durationLabel.bottomAnchor, constant: 100).isActive=true
             
             headImage.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3).isActive=true
             headImage.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive=true

@@ -9,12 +9,12 @@ import UIKit
 
 class ExerciseCell: UITableViewCell {
     
-    let ExerciseImage:UIImageView={
-        let image=UIImageView()
+    let ExerciseImage:ExerciseImageLoad={
+        let image=ExerciseImageLoad()
         image.translatesAutoresizingMaskIntoConstraints=false
         image.contentMode = .scaleAspectFill
         image.clipsToBounds=true
-        image.image = .init(named: "headImg3")
+//        image.image = .init(named: "headImg3")
         image.layer.cornerRadius=5
         return image
         }()
@@ -118,27 +118,28 @@ class ExerciseCell: UITableViewCell {
         super.backgroundColor = UIColor(red: 0.13, green: 0.13, blue: 0.12, alpha: 1.00)
         addComponents()
         addConstraints()
-        
-        exerciseBtn.addTarget(self, action: #selector(viewDetails), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func viewDetails(){
-        
-//        let exDetailsVC=ExerciseDetailsViewController()
-//        let navigationController = UINavigationController.self
-//        navigationController.pushViewController(exDetailsVC, animated: true)
-    }
-    
     func set (exercise:Exercise){
-        ExerciseImage.image = .init(UIImage(named: "pushups")!)
+        
+        if let url=URL(string: exercise.image){
+            ExerciseImage.loadImage(from: url)
+        }
+        
         exeriseName.text=exercise.name
         setsCount.text="\(exercise.sets) sets"
         repsCount.text="\(exercise.reps) reps"
-        time.text=exercise.time ?? ""
+        
+        if(exercise.time > 60){
+            time.text = "\(exercise.time/60) mins"
+        }else{
+            time.text="\(exercise.time) seconds "
+        }
+        
         
     }
     
@@ -157,7 +158,7 @@ class ExerciseCell: UITableViewCell {
         
         hstackMain.addArrangedSubview(ExerciseImage)
         hstackMain.addArrangedSubview(vstack)
-        hstackMain.addArrangedSubview(exerciseBtn)
+//        hstackMain.addArrangedSubview(exerciseBtn)
         
         addSubview(hstackMain)
         
@@ -180,10 +181,10 @@ class ExerciseCell: UITableViewCell {
         hstack1.bottomAnchor.constraint(equalTo: vstack.bottomAnchor, constant: -50).isActive=true
         hstack1.leadingAnchor.constraint(equalTo: ExerciseImage.trailingAnchor, constant: 2).isActive=true
         
-        exerciseBtn.widthAnchor.constraint(equalToConstant: 50).isActive=true
-        exerciseBtn.heightAnchor.constraint(equalToConstant: 25).isActive=true
-        exerciseBtn.leadingAnchor.constraint(equalTo: hstack1.trailingAnchor).isActive=true
-        exerciseBtn.trailingAnchor.constraint(equalTo: hstackMain.trailingAnchor, constant: 50).isActive=true
+//        exerciseBtn.widthAnchor.constraint(equalToConstant: 50).isActive=true
+//        exerciseBtn.heightAnchor.constraint(equalToConstant: 25).isActive=true
+//        exerciseBtn.leadingAnchor.constraint(equalTo: hstack1.trailingAnchor).isActive=true
+//        exerciseBtn.trailingAnchor.constraint(equalTo: hstackMain.trailingAnchor, constant: 50).isActive=true
         
     }
     

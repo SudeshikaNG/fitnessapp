@@ -23,11 +23,12 @@ router.get('/', async(req, res)=>{
     }
  })
 
-//get exercise data
-router.get('/:category', async(req, res)=>{
+//get exercise data - type and gender
+router.get('/:type/:gender', async(req, res)=>{
     console.log("inside exercise get")
-    const exCategory=req.params.category
-    query={type:exCategory}
+    const exCategory=req.params.type
+    const exGender = req.params.gender
+    query={type:exCategory, gender:exGender}
    try{
         const exerciseDetails=await Exercise.find(query)
         res.status(200).json({status:200, data:exerciseDetails})
@@ -38,25 +39,21 @@ router.get('/:category', async(req, res)=>{
    }
 })
 
-// router.post('/', async(req, res)=>{
-//     console.log("inside user post")
-
-//     const user=new User()
-//     user.name=req.body.name
-//     user.age=req.body.age
-//     user.gender = req.body.gender
-//     user.weight=req.body.weight
-//     user.height=req.body.height
-//     user.bmi=req.body.bmi
-//     user.goal=req.body.goal
-
-//     try{
-//        const response= await user.save()
-//        console.log(response)
-//    }catch(error){
-//         res.send("error occured: "+ error)
-//         console.log(error)
-//    }
-// })
+//get exercise data - day 01 
+router.get('/:type/:gender/:category', async(req, res)=>{
+     console.log("inside exercise get")
+     const exType=req.params.type
+     const exGender = req.params.gender
+     const exCategory= req.params.category
+     query={type:exType, gender:exGender, category:exCategory}
+    try{
+         const exerciseDetails=await Exercise.find(query)
+         res.status(200).json({status:200, data:exerciseDetails})
+         console.log(exerciseDetails)
+    }catch(error){
+         res.send("error occured: "+ error)
+         console.log(error)
+    }
+ })
 
 module.exports=router

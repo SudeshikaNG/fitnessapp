@@ -25,6 +25,7 @@
 		E63935482A154D660070459E /* YouTubePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63935472A154D660070459E /* YouTubePlayerViewController.swift */; };
 		E639354E2A160DDA0070459E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639354D2A160DDA0070459E /* UserModel.swift */; };
 		E63935502A16192B0070459E /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639354F2A16192B0070459E /* ExerciseModel.swift */; };
+		E63935532A171BCA0070459E /* ExerciseImageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63935522A171BCA0070459E /* ExerciseImageLoad.swift */; };
 		E67DA1BB2A0F0D8300036BA8 /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1BA2A0F0D8300036BA8 /* GetStartedViewController.swift */; };
 		E67DA1BF2A0F230300036BA8 /* ConfigureNavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1BE2A0F230300036BA8 /* ConfigureNavBarViewController.swift */; };
 		E67DA1C22A11106D00036BA8 /* SecondGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67DA1C12A11106D00036BA8 /* SecondGetStartedViewController.swift */; };
@@ -54,6 +55,7 @@
 		E63935492A154EE80070459E /* youtube-ios-player-helper-master */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "youtube-ios-player-helper-master"; path = "FItnessAppFrontend/youtube-ios-player-helper-master"; sourceTree = "<group>"; };
 		E639354D2A160DDA0070459E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		E639354F2A16192B0070459E /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
+		E63935522A171BCA0070459E /* ExerciseImageLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseImageLoad.swift; sourceTree = "<group>"; };
 		E67DA1BA2A0F0D8300036BA8 /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
 		E67DA1BE2A0F230300036BA8 /* ConfigureNavBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureNavBarViewController.swift; sourceTree = "<group>"; };
 		E67DA1C12A11106D00036BA8 /* SecondGetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondGetStartedViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		E63871BF2A0C82780045516A /* FItnessAppFrontend */ = {
 			isa = PBXGroup;
 			children = (
+				E63935512A171B990070459E /* CustomViews */,
 				E63935092A1379BE0070459E /* Model */,
 				E63935062A1377320070459E /* Extensions-Utilities */,
 				E63934FF2A1349630070459E /* ViewControllers */,
@@ -153,6 +156,14 @@
 				E63935412A154C720070459E /* MediaPlayer.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E63935512A171B990070459E /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				E63935522A171BCA0070459E /* ExerciseImageLoad.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +239,7 @@
 			files = (
 				E63935012A1349D50070459E /* ExerciseListVC.swift in Sources */,
 				E63935082A1377840070459E /* Constants.swift in Sources */,
+				E63935532A171BCA0070459E /* ExerciseImageLoad.swift in Sources */,
 				E63871C52A0C82780045516A /* ViewController.swift in Sources */,
 				E639350F2A153BCA0070459E /* ExerciseDetailsViewController.swift in Sources */,
 				E63935032A1355530070459E /* UIView+EXtension.swift in Sources */,

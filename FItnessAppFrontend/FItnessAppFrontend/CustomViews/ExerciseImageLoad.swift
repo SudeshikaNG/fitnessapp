@@ -9,12 +9,27 @@ import UIKit
 
 class ExerciseImageLoad: UIImageView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    func loadImage(from url:URL){
+        //loading image from url
+//        guard let url=URL(string:exercise.image!)else {
+//            return
+//        }
+        
+       let task = URLSession.shared.dataTask(with: url){
+            [weak self] (data, res, error) in
+            
+            if let error=error{
+                print("Error loading image: \(error.localizedDescription)")
+                return
+            }
+            
+            if let data=data,
+               let newImage=UIImage(data: data){
+                DispatchQueue.main.async {
+                    self?.image=newImage
+                }
+            }
+        }
+        task.resume()
     }
-    */
-
 }

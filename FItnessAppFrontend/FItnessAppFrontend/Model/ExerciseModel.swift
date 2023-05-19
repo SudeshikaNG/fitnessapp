@@ -20,9 +20,10 @@ struct Exercise: Codable{
     let type:String
     let gender:String
     let category:String
-    let time:String?
+    let time:Int
     let videoLink:String?
-    let image:String?
+    let image:String
+    let effPart:String
 
 }
 
