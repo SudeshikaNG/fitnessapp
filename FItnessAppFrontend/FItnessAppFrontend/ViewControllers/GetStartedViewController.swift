@@ -9,6 +9,8 @@ import UIKit
 
 class GetStartedViewController: UIViewController {
     
+    var userDetails : [String:Any] = [:]
+    
     let navBar = UINavigationBar()
     
     let screenTitle:UILabel={
@@ -27,12 +29,14 @@ class GetStartedViewController: UIViewController {
         let textField=UITextField()
         textField.translatesAutoresizingMaskIntoConstraints=false
         textField.borderStyle = .bezel
-        textField.keyboardType = .default
-        textField.textColor = .white
+//        textField.keyboardType = .default
+        textField.textColor = .orange
         textField.placeholder="Your Name"
         textField.attributedPlaceholder=NSAttributedString(string: "Your Name", attributes: [NSAttributedString.Key.foregroundColor:UIColor.gray])
         textField.borderStyle = .none
         textField.backgroundColor = .clear
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        textField.autocorrectionType = .no
         return textField
             
     }()
@@ -42,11 +46,13 @@ class GetStartedViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints=false
         textField.borderStyle = .bezel
         textField.keyboardType = .numberPad
-        textField.textColor = .white
+        textField.textColor = .orange
         textField.placeholder="Your Age"
         textField.attributedPlaceholder=NSAttributedString(string: "Your Age", attributes: [NSAttributedString.Key.foregroundColor:UIColor.gray])
         textField.borderStyle = .none
         textField.backgroundColor = .clear
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        textField.autocorrectionType = .no
         return textField
             
     }()
@@ -73,7 +79,7 @@ class GetStartedViewController: UIViewController {
         checkBox.setImage(UIImage(named: "checked"), for: .selected)
         checkBox.setTitle("Female", for: .normal)
         checkBox.setTitleColor(.white, for: .normal)
-        checkBox.titleLabel?.font = .systemFont(ofSize: 16)
+        checkBox.titleLabel?.font = .systemFont(ofSize: 20)
         checkBox.layer.cornerRadius=5
         checkBox.addTarget(self, action: #selector(genderSelected(_:)), for: .touchUpInside)
         return checkBox
@@ -86,7 +92,7 @@ class GetStartedViewController: UIViewController {
         checkBox.setImage(UIImage(named: "checked"), for: .selected)
         checkBox.setTitle("Male", for: .normal)
         checkBox.setTitleColor(.white, for: .normal)
-        checkBox.titleLabel?.font = .systemFont(ofSize: 16)
+        checkBox.titleLabel?.font = .systemFont(ofSize: 20)
         checkBox.layer.cornerRadius=5
         checkBox.addTarget(self, action: #selector(genderSelected(_:)), for: .touchUpInside)
         return checkBox
@@ -97,6 +103,9 @@ class GetStartedViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints=false
         button.backgroundColor = .orange
         button.setTitle("Next", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        button.layer.cornerRadius=10
         return button
             
     }()
@@ -144,14 +153,15 @@ class GetStartedViewController: UIViewController {
                 sender.backgroundColor = .orange
                 femaleCheckBoxBtn.backgroundColor = view.backgroundColor
                 femaleCheckBoxBtn.isSelected=false
+                userDetails["gender"] = "male"
                 print("male selected")
                 
             }
             else{
-                
                 femaleCheckBoxBtn.isSelected=true
                 sender.backgroundColor = view.backgroundColor
                 femaleCheckBoxBtn.backgroundColor = .orange
+                userDetails["gender"] = "female"
                 print("male deselected")
             }
         }
@@ -160,6 +170,7 @@ class GetStartedViewController: UIViewController {
                 maleCheckBoxBtn.isSelected=false
                 sender.backgroundColor = .orange
                 maleCheckBoxBtn.backgroundColor = view.backgroundColor
+                userDetails["gender"] = "female"
                 print("female selected")
                 
             }
@@ -167,6 +178,7 @@ class GetStartedViewController: UIViewController {
                 maleCheckBoxBtn.isSelected=true
                 sender.backgroundColor = view.backgroundColor
                 maleCheckBoxBtn.backgroundColor = .orange
+                userDetails["gender"] = "male"
                 print("female deselected")
             }
         }
@@ -188,7 +200,13 @@ class GetStartedViewController: UIViewController {
     }
     
     @objc func navigate(){
+        userDetails["name"] = nameTxt.text
+        userDetails["age"] = ageTxt.text
+        
+        print(userDetails)
+        
         let secondGetStartedVC = SecondGetStartedViewController()
+        secondGetStartedVC.userDetails = userDetails
         navigationController?.pushViewController(secondGetStartedVC, animated: true)
     }
     
@@ -229,9 +247,9 @@ class GetStartedViewController: UIViewController {
         
         nextBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         nextBtn.widthAnchor.constraint(equalToConstant: 400).isActive=true
-//        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive=true
-//        nextBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
-//        nextBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
+        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130).isActive=true
+        nextBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive=true
+        nextBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive=true
                 
         vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 100).isActive=true
         vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true

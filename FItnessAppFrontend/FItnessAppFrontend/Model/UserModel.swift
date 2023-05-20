@@ -1,19 +1,32 @@
-//
-//  UserModel.swift
-//  FItnessAppFrontend
-//
-//  Created by Sudeshika Gunawardena on 2023-05-18.
-//
-
 import Foundation
 
+struct APIResponse: Codable {
+    let status: Int
+    let data: [User]
+}
 
-struct UserModel:Codable{
-    let name:String
+struct User: Codable {
+    let id: String
+    let name: String
     let age: Int
     let gender: String
-    let weight: Decimal
-    let height:Decimal
-    let bmi:Decimal
-    let goal:String
+    let weight: Double
+    let height: Double
+    let bmi: Double
+    let goal: String
+    let m_id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case name
+        case age
+        case gender
+        case weight
+        case height
+        case bmi
+        case goal
+        case m_id = "m_id"
+    }
 }
+
+

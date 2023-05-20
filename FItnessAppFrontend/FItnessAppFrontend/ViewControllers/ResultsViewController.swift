@@ -8,6 +8,11 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
+    
+    var userId:String?
+    
+    var userData :User?
+    
     let navBar = UINavigationBar()
     
     let screenTitle:UILabel={
@@ -19,9 +24,9 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
-            
+    
     let bmiLabel:UILabel={
         let label=UILabel()
         label.text="BMI : "
@@ -31,19 +36,19 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let bmiValLabel:UILabel={
         let label=UILabel()
-        label.text="BMI : "
+//        label.text="BMI : "
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let waterLabel:UILabel={
@@ -55,21 +60,21 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let waterValLabel:UILabel={
         let label=UILabel()
-        label.text="Water Intake : "
+//        label.text="Water Intake : "
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
-    }()
         
+    }()
+    
     let caloryLabel:UILabel={
         let label=UILabel()
         label.text="Calory Intake : "
@@ -79,19 +84,19 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let caloryValLabel:UILabel={
         let label=UILabel()
-        label.text="Calory Intake : "
+//        label.text="Calory Intake : "
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let weightLabel:UILabel={
@@ -103,19 +108,19 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let weightValLabel:UILabel={
         let label=UILabel()
-        label.text="Weight : "
+//        label.text="Weight : "
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let heightLabel:UILabel={
@@ -127,19 +132,19 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let heightValLabel:UILabel={
         let label=UILabel()
-        label.text="Height :"
+//        label.text="Height :"
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let goalLabel:UILabel={
@@ -151,19 +156,19 @@ class ResultsViewController: UIViewController {
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let goalValLabel:UILabel={
         let label=UILabel()
-        label.text="Goal : "
+//        label.text="Goal : "
         label.translatesAutoresizingMaskIntoConstraints=false
         label.textAlignment = .center
         label.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth=true
         return label
-            
+        
     }()
     
     let backBtn:UIButton={
@@ -174,7 +179,7 @@ class ResultsViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .bold)
         return button
-
+        
     }()
     
     let workoutBtn:UIButton={
@@ -184,10 +189,10 @@ class ResultsViewController: UIViewController {
         button.setTitle("Create Workout Routine", for: .normal)
         button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         button.setTitleColor(.black, for: .normal)
-//        button.layer.borderWidth = 2
-//        button.layer.borderColor = UIColor.black.cgColor
+        //        button.layer.borderWidth = 2
+        //        button.layer.borderColor = UIColor.black.cgColor
         return button
-            
+        
     }()
     
     let vstack:UIStackView={
@@ -202,9 +207,9 @@ class ResultsViewController: UIViewController {
         stack.alpha=0.8
         stack.layer.cornerRadius=5
         return stack
-            
+        
     }()
-
+    
     let hstack1:UIStackView={
         let stack=UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints=false
@@ -213,7 +218,7 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
     let hstack2:UIStackView={
@@ -224,7 +229,7 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
     let hstack3:UIStackView={
@@ -235,7 +240,7 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
     let hstack4:UIStackView={
@@ -246,7 +251,7 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
     let hstack5:UIStackView={
@@ -257,7 +262,7 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
     let hstack6:UIStackView={
@@ -268,38 +273,44 @@ class ResultsViewController: UIViewController {
         stack.spacing=10
         stack.distribution = .fillProportionally
         return stack
-            
+        
     }()
     
-//    let vstackBtns:UIStackView={
-//        let stack=UIStackView()
-//        stack.translatesAutoresizingMaskIntoConstraints=false
-//        stack.axis = .vertical
-//        stack.alignment = .center
-//        stack.spacing=10
-//        stack.distribution = .equalSpacing
-//        return stack
-//
-//    }()
-    
     let bgImage:UIImageView={
-            let image=UIImageView()
-            image.translatesAutoresizingMaskIntoConstraints=false
-            image.contentMode = .scaleAspectFill
-            image.clipsToBounds=true
-            image.image = .init(named: "fmres")
-            return image
-        }()
+        let image=UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints=false
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds=true
+        image.image = .init(named: "fmres")
+        return image
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(bgImage)
         view.sendSubviewToBack(bgImage)
-
+        
         configureNavBar()
         addComponents()
         addConstraints()
+        
+        let anonymousFunction={
+            (fetchedUser:User) in
+            DispatchQueue.main.async {
+                self.userData = fetchedUser
+                print("user details")
+                print(self.userData)
+                self.setData()
+            }
+        }
+        
+        fetchDataFromApi(onCompletion: anonymousFunction)
+        
+//        print("***************")
+//        print(userData)
+        
+//        setData()
         
         backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         workoutBtn.addTarget(self, action: #selector(navigateExercise), for: .touchUpInside)
@@ -312,12 +323,82 @@ class ResultsViewController: UIViewController {
     }
     
     @objc func navigateExercise(){
-//        let routineVC=RoutineViewController()
-//        navigationController?.pushViewController(routineVC, animated: true)
+        //        let routineVC=RoutineViewController()
+        //        navigationController?.pushViewController(routineVC, animated: true)
         
         let exerciseListVC=ExerciseListVC()
         navigationController?.pushViewController(exerciseListVC, animated: true)
     }
+    
+    func fetchDataFromApi(onCompletion: @escaping (User) -> Void) {
+        
+        print("inside fetch api")
+        var urlString: String
+        
+//        if let id = userId {
+//            urlString = "http://localhost:8080/user/\(id)"
+            urlString = "http://localhost:8080/user/09F69B52-02A9-4C36-8C40-683A20ECABBE"
+            
+            print("baseurl")
+            print(urlString)
+            
+            guard let url = URL(string: urlString) else {
+                print("Error creating URL")
+                return
+            }
+            
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Error fetching data: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let data = data else {
+                    print("Data is nil")
+                    return
+                }
+                
+                print("data")
+                print(data)
+                do {
+                    let decoder = JSONDecoder()
+                    let userResponse = try decoder.decode(APIResponse.self, from: data)
+                    let user=userResponse.data.first
+                    print("userResponse")
+                    print(user)
+                    onCompletion(user!)
+                } catch {
+                    print("Error decoding user data: \(error.localizedDescription)")
+                }
+            }
+            
+            task.resume()
+//        }
+    }
+    
+    func setData(){
+        
+        guard let user = userData else {
+            
+            return
+        }
+        
+        bmiValLabel.text="\(user.bmi)"
+        weightValLabel.text="\(user.weight)"
+        heightValLabel.text="\(user.height)"
+
+        if (user.gender == "female"){
+            waterValLabel.text="2.7 Litres"
+            caloryValLabel.text="2400-3000"
+            goalValLabel.text="Weight Gain"
+        }else{
+            waterValLabel.text = "3.7 L"
+            caloryValLabel.text="2800-3500"
+            goalValLabel.text="Fat Loss"
+        }
+    
+    }
+    
     
     func addComponents(){
         
@@ -347,16 +428,16 @@ class ResultsViewController: UIViewController {
         vstack.addArrangedSubview(hstack5)
         vstack.addArrangedSubview(hstack6)
         vstack.addArrangedSubview(workoutBtn)
-//        vstack.addArrangedSubview(graphBtn)
+        //        vstack.addArrangedSubview(graphBtn)
         
-//        vstackBtns.addArrangedSubview(graphBtn)
-//        vstackBtns.addArrangedSubview(workoutBtn)
+        //        vstackBtns.addArrangedSubview(graphBtn)
+        //        vstackBtns.addArrangedSubview(workoutBtn)
         
         view.addSubview(vstack)
-//        vstack.bringSubviewToFront(workoutBtn)
+        //        vstack.bringSubviewToFront(workoutBtn)
         view.addSubview(backBtn)
-    
-//        view.addSubview(vstackBtns)
+        
+        //        view.addSubview(vstackBtns)
         
         
     }
@@ -368,12 +449,12 @@ class ResultsViewController: UIViewController {
         vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true
         vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive=true
         
-        bmiLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 50).isActive=true
-        weightLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 35).isActive=true
-        heightLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 35).isActive=true
-        waterLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 10).isActive=true
-        caloryLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 10).isActive=true
-        goalLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor, constant: 50).isActive=true
+        bmiLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor,constant: 40).isActive=true
+        weightLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor,constant: 20).isActive=true
+        heightLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
+        waterLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
+        caloryLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
+        goalLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
         
         bmiValLabel.leadingAnchor.constraint(equalTo: bmiLabel.trailingAnchor).isActive=true
         weightValLabel.leadingAnchor.constraint(equalTo: weightLabel.trailingAnchor).isActive=true
@@ -381,7 +462,7 @@ class ResultsViewController: UIViewController {
         waterValLabel.leadingAnchor.constraint(equalTo: waterLabel.trailingAnchor).isActive=true
         caloryValLabel.leadingAnchor.constraint(equalTo: caloryLabel.trailingAnchor).isActive=true
         goalValLabel.leadingAnchor.constraint(equalTo: goalLabel.trailingAnchor).isActive=true
-               
+        
         workoutBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         workoutBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
         
@@ -390,13 +471,13 @@ class ResultsViewController: UIViewController {
         backBtn.topAnchor.constraint(equalTo: vstack.bottomAnchor, constant: 20).isActive=true
         backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20).isActive=true
         backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -250).isActive=true
-
+        
     }
     
     
     
     
-/////////////////////////////////////////////////navbar////////////////////////////////////////////////////
+    /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
     let screenHeading:UILabel={
         let label=UILabel()
         label.text="Fitness on Track"
@@ -417,7 +498,7 @@ class ResultsViewController: UIViewController {
         navigationItem.leftBarButtonItem=titleItem
         //navBar.setItems([navigationItem], animated: false)
         navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-//        navigationController?.navigationBar.barTintColor = UIColor.red
+        //        navigationController?.navigationBar.barTintColor = UIColor.red
         navBar.translatesAutoresizingMaskIntoConstraints=false
         navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
         navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -427,9 +508,9 @@ class ResultsViewController: UIViewController {
         navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
     }
     
-@objc func showSettings(){
+    @objc func showSettings(){
+        
+    }
     
-}
-            
-            
+    
 }

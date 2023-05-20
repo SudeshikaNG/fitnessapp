@@ -9,10 +9,13 @@ router.use(bodyParser.urlencoded({extended:false}))
 const User=require('../models/userModel')
 
 //get user data
-router.get('/', async(req, res)=>{
+router.get('/:id', async(req, res)=>{
     console.log("inside user get")
+
+    const userId=req.params.id
+    query={m_id:userId}
    try{
-        const userDetails=await User.find()
+        const userDetails=await User.find(query)
         res.status(200).json({status:200, data:userDetails})
         console.log(userDetails)
    }catch(error){
@@ -32,6 +35,7 @@ router.post('/', async(req, res)=>{
     user.height=req.body.height
     user.bmi=req.body.bmi
     user.goal=req.body.goal
+    user.m_id=req.body.m_id
 
     try{
        const response= await user.save()
