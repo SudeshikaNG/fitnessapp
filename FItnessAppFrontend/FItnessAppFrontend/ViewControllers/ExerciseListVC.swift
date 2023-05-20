@@ -9,6 +9,8 @@ import UIKit
 
 class ExerciseListVC: UIViewController {
     
+    var gender : Any?
+    
     let navBar = UINavigationBar()
 
     var tableView = UITableView()
@@ -77,37 +79,41 @@ let vstack2:UIStackView={
     }
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
-        let urlSring="http://localhost:8080/exercises"
-        guard let url=URL(string: urlSring) else{
-            print("error getting url")
-            return
-        }
         
-        //request to url - task+urlsession
-        let task=URLSession.shared.dataTask(with: url){
-            (data, res, error) in
-            
-            print(String(data: data!, encoding: .utf8))
-            
-            //check if data is nill
-            guard let data = data else{
-                print("data is nil")
+        if let gender = gender{
+            print(gender)
+            let urlSring="http://localhost:8080/exercises/\(gender)"
+            guard let url=URL(string: urlSring) else{
+                print("error getting url")
                 return
             }
-
             
-            //decode json data
-            guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
-            else{
-                print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
-                            return
+            //request to url - task+urlsession
+            let task=URLSession.shared.dataTask(with: url){
+                (data, res, error) in
+                
+                print(String(data: data!, encoding: .utf8))
+                
+                //check if data is nill
+                guard let data = data else{
+                    print("data is nil")
+                    return
+                }
+                
+                
+                //decode json data
+                guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
+                else{
+                    print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
+                    return
+                }
+                
+                print(workoutsResponse.data)
+                onCompletion(workoutsResponse.data)
+                
             }
-            
-            print(workoutsResponse.data)
-            onCompletion(workoutsResponse.data)
-            
+            task.resume()
         }
-        task.resume()
     }
     
 
@@ -133,7 +139,11 @@ let vstack2:UIStackView={
     /////////////////////////////////////////////////////////////new codes///////////////////////////////////////////////////////////////////////////
     
     @objc func navigateCalendar(){
+        guard let gender=gender else{
+            return 
+        }
         let calendarVC=CalendarViewController()
+        calendarVC.gender = gender
         navigationController?.pushViewController(calendarVC, animated: true)
     }
     
@@ -179,14 +189,15 @@ let vstack2:UIStackView={
         }()
         
         func configureNavBar(){
+            
+            
             view.addSubview(navBar)
             
             //navigationItem.titleView=appTitle
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-    //        navigationController?.navigationBar.barTintColor = UIColor.red
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -196,10 +207,10 @@ let vstack2:UIStackView={
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
         
-    @objc func showSettings(){
-        
-    }
-
+        @objc func showSettings(){
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
 }
 
 extension ExerciseListVC:UITableViewDelegate, UITableViewDataSource{

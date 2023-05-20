@@ -36,6 +36,14 @@ const userSchema = new mongoose.Schema({
     m_id: {
         type: String,
         required: true
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    password:{
+        type:String,
+        required:true
     }
 }
     , { collection: 'user_details' })

@@ -8,22 +8,111 @@
 import UIKit
 
 class LandingViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+        
+        let logoView:UIImageView={
+            let image=UIImageView()
+            image.translatesAutoresizingMaskIntoConstraints=false
+            image.contentMode = .scaleAspectFill
+            image.layer.cornerRadius = 80
+            image.clipsToBounds=true
+            image.image = .init(named: "logo")
+            return image
+        }()
+        
+        let appTitle:UILabel={
+            let label=UILabel()
+            label.text="Fitness on Track"
+            label.translatesAutoresizingMaskIntoConstraints=false
+            label.textAlignment = .center
+            label.font=label.font.withSize(20)
+            label.textColor = .white
+            label.adjustsFontSizeToFitWidth=true
+            return label
+        }()
+        
+        let loginBtn:UIButton={
+            let button=UIButton()
+            button.translatesAutoresizingMaskIntoConstraints=false
+            button.backgroundColor = .orange
+            button.setTitle("Login", for: .normal)
+            button.layer.cornerRadius=20
+            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font=UIFont.systemFont(ofSize: 20, weight: .bold)
+            return button
+        }()
     
+    let registerBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("Register", for: .normal)
+        button.layer.cornerRadius=20
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 20, weight: .bold)
+        return button
+    }()
+        
+        let vstack:UIStackView={
+            let stack=UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints=false
+            stack.axis = .vertical
+            stack.spacing=5
+            stack.distribution = .equalSpacing
+            return stack
+        }()
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            title = "Fitness For Life"
+            view.backgroundColor = .black
+            
+            addComponents()
+            setConstraints()
+            
+            loginBtn.addTarget(self, action: #selector(login), for: .touchUpInside)
+            registerBtn.addTarget(self, action: #selector(registerNew), for: .touchUpInside)
+            
+        }
+        
+        @objc func login(){
+            let loginVC = LoginViewController()
+            navigationController?.pushViewController(loginVC, animated: true)
+        }
+    
+    @objc func registerNew(){
+        let addLoginDataVC = AddLoginDataViewController()
+        navigationController?.pushViewController(addLoginDataVC, animated: true)
     }
-    */
+        
+        func setConstraints(){
+            
+            logoView.heightAnchor.constraint(equalToConstant: 200).isActive=true
+            logoView.widthAnchor.constraint(equalToConstant: 50).isActive=true
+            
+            appTitle.widthAnchor.constraint(equalToConstant: 20).isActive=true
+            appTitle.heightAnchor.constraint(equalToConstant: 30).isActive=true
+            appTitle.topAnchor.constraint(equalTo: logoView.bottomAnchor,constant: 20).isActive=true
+            
+            loginBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
+            loginBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
+            loginBtn.topAnchor.constraint(equalTo: appTitle.bottomAnchor,constant: 500).isActive=true
 
+            registerBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
+            registerBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
+            registerBtn.topAnchor.constraint(equalTo: loginBtn.bottomAnchor,constant: 50).isActive=true
+            
+            vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25).isActive=true
+            vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive=true
+            vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive=true
+            
+        }
+        
+        
+        func addComponents(){
+            vstack.addArrangedSubview(logoView)
+            vstack.addArrangedSubview(appTitle)
+            vstack.addArrangedSubview(loginBtn)
+            vstack.addArrangedSubview(registerBtn)
+            view.addSubview(vstack)
+        }
 }

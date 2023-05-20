@@ -9,9 +9,7 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
-    var userId:String?
-    
-    var userData :User?
+    var userDetails : [String:Any] = [:]
     
     let navBar = UINavigationBar()
     
@@ -178,6 +176,7 @@ class ResultsViewController: UIViewController {
         button.setTitle("Back", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.layer.cornerRadius=10
         return button
         
     }()
@@ -189,8 +188,7 @@ class ResultsViewController: UIViewController {
         button.setTitle("Create Workout Routine", for: .normal)
         button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
         button.setTitleColor(.black, for: .normal)
-        //        button.layer.borderWidth = 2
-        //        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.cornerRadius=10
         return button
         
     }()
@@ -295,22 +293,10 @@ class ResultsViewController: UIViewController {
         addComponents()
         addConstraints()
         
-        let anonymousFunction={
-            (fetchedUser:User) in
-            DispatchQueue.main.async {
-                self.userData = fetchedUser
-                print("user details")
-                print(self.userData)
-                self.setData()
-            }
-        }
-        
-        fetchDataFromApi(onCompletion: anonymousFunction)
+        setData()
         
 //        print("***************")
 //        print(userData)
-        
-//        setData()
         
         backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         workoutBtn.addTarget(self, action: #selector(navigateExercise), for: .touchUpInside)
@@ -323,71 +309,39 @@ class ResultsViewController: UIViewController {
     }
     
     @objc func navigateExercise(){
-        //        let routineVC=RoutineViewController()
-        //        navigationController?.pushViewController(routineVC, animated: true)
         
         let exerciseListVC=ExerciseListVC()
+        exerciseListVC.gender=userDetails["gender"]
         navigationController?.pushViewController(exerciseListVC, animated: true)
-    }
-    
-    func fetchDataFromApi(onCompletion: @escaping (User) -> Void) {
-        
-        print("inside fetch api")
-        var urlString: String
-        
-//        if let id = userId {
-//            urlString = "http://localhost:8080/user/\(id)"
-            urlString = "http://localhost:8080/user/09F69B52-02A9-4C36-8C40-683A20ECABBE"
-            
-            print("baseurl")
-            print(urlString)
-            
-            guard let url = URL(string: urlString) else {
-                print("Error creating URL")
-                return
-            }
-            
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if let error = error {
-                    print("Error fetching data: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("Data is nil")
-                    return
-                }
-                
-                print("data")
-                print(data)
-                do {
-                    let decoder = JSONDecoder()
-                    let userResponse = try decoder.decode(APIResponse.self, from: data)
-                    let user=userResponse.data.first
-                    print("userResponse")
-                    print(user)
-                    onCompletion(user!)
-                } catch {
-                    print("Error decoding user data: \(error.localizedDescription)")
-                }
-            }
-            
-            task.resume()
-//        }
     }
     
     func setData(){
         
-        guard let user = userData else {
-            
+        print("resultd vc")
+        print(userDetails)
+        
+        guard let gender = userDetails["gender"] as? String,
+              let weightString = userDetails["weight"] as? String,
+              let weight = Double(weightString),
+              let heightString = userDetails["height"] as? String,
+              let height = Double(heightString),
+              let bmi = userDetails["bmi"] as? Double
+        else {
+//            print("gender")
+//            print("gender:", userDetails["gender"])
+//            print("weight:", userDetails["weight"])
+//            print("height:", userDetails["height"])
+//            print("bmi:", userDetails["bmi"])
+
             return
         }
         
-        bmiValLabel.text="\(user.bmi)"
-        weightValLabel.text="\(user.weight)"
-        heightValLabel.text="\(user.height)"
+//        let bmiRounded = ( bmi * 100).rounded()/100
+//        bmiValLabel.text="\(bmiRounded)"
+        weightValLabel.text="\(weight)"
+        heightValLabel.text="\(height)"
 
-        if (user.gender == "female"){
+        if (gender == "female"){
             waterValLabel.text="2.7 Litres"
             caloryValLabel.text="2400-3000"
             goalValLabel.text="Weight Gain"
@@ -456,12 +410,12 @@ class ResultsViewController: UIViewController {
         caloryLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
         goalLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
         
-        bmiValLabel.leadingAnchor.constraint(equalTo: bmiLabel.trailingAnchor).isActive=true
-        weightValLabel.leadingAnchor.constraint(equalTo: weightLabel.trailingAnchor).isActive=true
-        heightValLabel.leadingAnchor.constraint(equalTo: heightLabel.trailingAnchor).isActive=true
-        waterValLabel.leadingAnchor.constraint(equalTo: waterLabel.trailingAnchor).isActive=true
-        caloryValLabel.leadingAnchor.constraint(equalTo: caloryLabel.trailingAnchor).isActive=true
-        goalValLabel.leadingAnchor.constraint(equalTo: goalLabel.trailingAnchor).isActive=true
+        bmiValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        weightValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        heightValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        waterValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        caloryValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        goalValLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
         
         workoutBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         workoutBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
@@ -478,39 +432,34 @@ class ResultsViewController: UIViewController {
     
     
     /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
-    let screenHeading:UILabel={
-        let label=UILabel()
-        label.text="Fitness on Track"
-        label.translatesAutoresizingMaskIntoConstraints=false
-        label.textAlignment = .center
-        label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .white
-        label.backgroundColor = .black
-        label.adjustsFontSizeToFitWidth=true
-        return label
-    }()
-    
-    func configureNavBar(){
-        view.addSubview(navBar)
+        let screenHeading:UILabel={
+            let label=UILabel()
+            label.text="Fitness on Track"
+            label.translatesAutoresizingMaskIntoConstraints=false
+            label.textAlignment = .center
+            label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
+            label.textColor = .white
+//            label.backgroundColor = .black
+            label.adjustsFontSizeToFitWidth=true
+            return label
+        }()
         
-        //navigationItem.titleView=appTitle
-        let titleItem=UIBarButtonItem(customView: screenHeading)
-        navigationItem.leftBarButtonItem=titleItem
-        //navBar.setItems([navigationItem], animated: false)
-        navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-        //        navigationController?.navigationBar.barTintColor = UIColor.red
-        navBar.translatesAutoresizingMaskIntoConstraints=false
-        navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
-        navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
-        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
-        navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
-        navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
-        navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
-    }
-    
-    @objc func showSettings(){
-        
-    }
+        func configureNavBar(){
+            
+            
+            view.addSubview(navBar)
+            
+            //navigationItem.titleView=appTitle
+            let titleItem=UIBarButtonItem(customView: screenHeading)
+            navigationItem.leftBarButtonItem=titleItem
+            navBar.translatesAutoresizingMaskIntoConstraints=false
+            navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
+            navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
+            navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
+            navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
+            navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
+            navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
+        }
     
     
 }

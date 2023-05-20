@@ -203,6 +203,7 @@ class GetStartedViewController: UIViewController {
         userDetails["name"] = nameTxt.text
         userDetails["age"] = ageTxt.text
         
+        print("get started vc")
         print(userDetails)
         
         let secondGetStartedVC = SecondGetStartedViewController()
@@ -259,40 +260,33 @@ class GetStartedViewController: UIViewController {
     
     
     
-/////////////////////////////////////////////////navbar////////////////////////////////////////////////////
-    let screenHeading:UILabel={
-        let label=UILabel()
-        label.text="Fitness on Track"
-        label.translatesAutoresizingMaskIntoConstraints=false
-        label.textAlignment = .center
-        label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .white
-        label.backgroundColor = .black
-        label.adjustsFontSizeToFitWidth=true
-        return label
-    }()
-    
-    func configureNavBar(){
+    /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
+        let screenHeading:UILabel={
+            let label=UILabel()
+            label.text="Fitness on Track"
+            label.translatesAutoresizingMaskIntoConstraints=false
+            label.textAlignment = .center
+            label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
+            label.textColor = .white
+//            label.backgroundColor = .black
+            label.adjustsFontSizeToFitWidth=true
+            return label
+        }()
         
-        
-        view.addSubview(navBar)
-        
-        //navigationItem.titleView=appTitle
-        let titleItem=UIBarButtonItem(customView: screenHeading)
-        navigationItem.leftBarButtonItem=titleItem
-        //navBar.setItems([navigationItem], animated: false)
-        navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-//        navigationController?.navigationBar.barTintColor = UIColor.red
-        navBar.translatesAutoresizingMaskIntoConstraints=false
-        navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
-        navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
-        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
-        navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
-        navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
-        navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
-    }
-    
-    @objc func showSettings(){
-        
-    }
+        func configureNavBar(){
+            
+            
+            view.addSubview(navBar)
+            
+            //navigationItem.titleView=appTitle
+            let titleItem=UIBarButtonItem(customView: screenHeading)
+            navigationItem.leftBarButtonItem=titleItem
+            navBar.translatesAutoresizingMaskIntoConstraints=false
+            navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
+            navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
+            navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
+            navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
+            navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
+            navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
+        }
 }

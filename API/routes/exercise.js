@@ -24,11 +24,11 @@ router.get('/', async(req, res)=>{
  })
 
 //get exercise data - type and gender
-router.get('/:type/:gender', async(req, res)=>{
+router.get('/:gender', async(req, res)=>{
     console.log("inside exercise get")
     const exCategory=req.params.type
     const exGender = req.params.gender
-    query={type:exCategory, gender:exGender}
+    query={gender:exGender}
    try{
         const exerciseDetails=await Exercise.find(query)
         res.status(200).json({status:200, data:exerciseDetails})

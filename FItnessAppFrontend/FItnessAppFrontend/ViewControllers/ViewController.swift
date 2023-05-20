@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     let startBtn:UIButton={
         let button=UIButton()
         button.translatesAutoresizingMaskIntoConstraints=false
-        button.backgroundColor = .red
+        button.backgroundColor = .orange
         button.setTitle("Get Started", for: .normal)
         button.layer.cornerRadius=15
         return button
@@ -61,8 +61,8 @@ class ViewController: UIViewController {
     }
     
     @objc func navigate(){
-        let getStartedVC = GetStartedViewController()
-        navigationController?.pushViewController(getStartedVC, animated: true)
+        let landingVC = LandingViewController()
+        navigationController?.pushViewController(landingVC, animated: true)
     }
     
     func setConstraints(){

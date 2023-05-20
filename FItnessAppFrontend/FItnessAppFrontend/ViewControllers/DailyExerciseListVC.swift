@@ -8,6 +8,8 @@
 import UIKit
 
 class DailyExerciseListVC: UIViewController {
+    
+        var gender : Any?
 
         let navBar = UINavigationBar()
 
@@ -67,37 +69,45 @@ class DailyExerciseListVC: UIViewController {
         }
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
-        let urlSring="http://localhost:8080/exercises/fl/male/cardio"
-        guard let url=URL(string: urlSring) else{
-            print("error getting url")
-            return
-        }
-        
-        //request to url - task+urlsession
-        let task=URLSession.shared.dataTask(with: url){
-            (data, res, error) in
-            
-            print(String(data: data!, encoding: .utf8))
-            
-            //check if data is nill
-            guard let data = data else{
-                print("data is nil")
+        let ExType:String
+        if let gender = gender{
+            if (gender as! String == "female"){
+                ExType = "wg"
+            }else{
+                ExType="fl"
+            }
+            let urlSring="http://localhost:8080/exercises/\(ExType)/\(gender)/bodyweight"
+            guard let url=URL(string: urlSring) else{
+                print("error getting url")
                 return
             }
-
             
-            //decode json data
-            guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
-            else{
-                print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
-                            return
+            //request to url - task+urlsession
+            let task=URLSession.shared.dataTask(with: url){
+                (data, res, error) in
+                
+                print(String(data: data!, encoding: .utf8))
+                
+                //check if data is nill
+                guard let data = data else{
+                    print("data is nil")
+                    return
+                }
+                
+                
+                //decode json data
+                guard let workoutsResponse=try? JSONDecoder().decode(Workouts.self, from: data)
+                else{
+                    print("Error decoding workouts data: \(error?.localizedDescription ?? "")")
+                    return
+                }
+                
+                print(workoutsResponse.data)
+                onCompletion(workoutsResponse.data)
+                
             }
-            
-            print(workoutsResponse.data)
-            onCompletion(workoutsResponse.data)
-            
+            task.resume()
         }
-        task.resume()
     }
     
 
@@ -139,38 +149,42 @@ class DailyExerciseListVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: vstack2.bottomAnchor, constant: 5).isActive=true
         }
 
-        /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
-            let screenHeading:UILabel={
-                let label=UILabel()
-                label.text="Fitness on Track"
-                label.translatesAutoresizingMaskIntoConstraints=false
-                label.textAlignment = .center
-                label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
-                label.textColor = .white
-    //            label.backgroundColor = .black
-                label.adjustsFontSizeToFitWidth=true
-                return label
-            }()
-
-            func configureNavBar(){
-                view.addSubview(navBar)
-                let titleItem=UIBarButtonItem(customView: screenHeading)
-                navigationItem.leftBarButtonItem=titleItem
-                navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-                navBar.translatesAutoresizingMaskIntoConstraints=false
-                navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
-                navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
-                navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
-                navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
-                navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
-                navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
-            }
-
-        @objc func showSettings(){
-
+    /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
+        let screenHeading:UILabel={
+            let label=UILabel()
+            label.text="Fitness on Track"
+            label.translatesAutoresizingMaskIntoConstraints=false
+            label.textAlignment = .center
+            label.font=UIFont.systemFont(ofSize: 20, weight: .bold)
+            label.textColor = .white
+//            label.backgroundColor = .black
+            label.adjustsFontSizeToFitWidth=true
+            return label
+        }()
+        
+        func configureNavBar(){
+            
+            
+            view.addSubview(navBar)
+            
+            //navigationItem.titleView=appTitle
+            let titleItem=UIBarButtonItem(customView: screenHeading)
+            navigationItem.leftBarButtonItem=titleItem
+            //navBar.setItems([navigationItem], animated: false)
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
+            navBar.translatesAutoresizingMaskIntoConstraints=false
+            navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
+            navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
+            navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive=true
+            navBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive=true
+            navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
+            navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
-
-
+        
+        @objc func showSettings(){
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
 
     }
 
@@ -187,6 +201,16 @@ class DailyExerciseListVC: UIViewController {
             cell.layer.borderColor = UIColor.gray.cgColor
             cell.layer.borderWidth = 0.5
             return cell
+        }
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            //passing data
+            let exerciseData=exercise[indexPath.row]
+            //navigate
+            let exDetailsVC = ExerciseDetailsViewController()
+            exDetailsVC.exerciseData=exerciseData
+            navigationController?.pushViewController(exDetailsVC, animated: true)
         }
 
 

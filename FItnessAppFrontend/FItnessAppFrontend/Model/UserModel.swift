@@ -15,6 +15,8 @@ struct User: Codable {
     let bmi: Double
     let goal: String
     let m_id: String
+    let username:String
+    let password:String
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -26,6 +28,8 @@ struct User: Codable {
         case bmi
         case goal
         case m_id = "m_id"
+        case username
+        case password
     }
 }
 

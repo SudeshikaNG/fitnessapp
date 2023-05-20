@@ -9,6 +9,8 @@ import UIKit
 
 class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDelegate, UICalendarViewDelegate {
     
+    var gender : Any?
+    
     func dateSelection(_ selection: UICalendarSelectionSingleDate, canSelectDate dateComponents: DateComponents?) -> Bool {
         return true
     }
@@ -16,7 +18,12 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
     func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
         print("Date is: ", dateComponents )
         
+        guard let gender = gender else{
+            return
+        }
+        
         let dailyExerciseListVC=DailyExerciseListVC()
+        dailyExerciseListVC.gender = gender
         navigationController?.pushViewController(dailyExerciseListVC, animated: true)
     }
     
@@ -107,7 +114,7 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
 
     func createCalendar(){
         calendarView.translatesAutoresizingMaskIntoConstraints=false
-        calendarView.calendar = Calendar(identifier: .gregorian)
+//        calendarView.calendar = Calendar(identifier: .gregorian)
         calendarView.fontDesign = .rounded
         calendarView.tintColor = .red
         
@@ -139,7 +146,10 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
         tipImage.topAnchor.constraint(equalTo: backBtn.bottomAnchor).isActive=true
         tipImage.heightAnchor.constraint(equalToConstant: view.bounds.size.height/5).isActive=true
         tipImage.widthAnchor.constraint(equalToConstant: view.bounds.size.width).isActive=true
-        tipImage.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -20).isActive=true
+        tipImage.bottomAnchor.constraint(equalTo: titleLabel.topAnchor).isActive=true
+        
+        titleLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
+        titleLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
   }
 
     /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
@@ -154,16 +164,17 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
             label.adjustsFontSizeToFitWidth=true
             return label
         }()
-
+        
         func configureNavBar(){
+            
+            
             view.addSubview(navBar)
-
+            
             //navigationItem.titleView=appTitle
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(showSettings))
-    //        navigationController?.navigationBar.barTintColor = UIColor.red
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -172,11 +183,11 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
             navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
-
-    @objc func showSettings(){
-
-    }
-
+        
+        @objc func showSettings(){
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
 
     }
 
