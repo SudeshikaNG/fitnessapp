@@ -169,7 +169,7 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         stack.spacing=50
         stack.distribution = .equalSpacing
         stack.backgroundColor = .black
-        stack.layoutMargins = UIEdgeInsets(top: 50, left: 50, bottom: 5, right: 50)
+        stack.layoutMargins = UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 50)
         stack.isLayoutMarginsRelativeArrangement = true
         stack.alpha=0.9
         stack.layer.cornerRadius=5
@@ -195,6 +195,19 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         image.clipsToBounds=true
         image.image = .init(named: "bgImage1")
         return image
+    }()
+    
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
     }()
     
     @objc func goalSelected(_ sender:UIButton){
@@ -248,24 +261,56 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         addConstraints()
         
         nextBtn.addTarget(self, action: #selector(navigate), for: .touchUpInside)
+        backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
     }
     
     @objc func navigate(){
-        userDetails["weight"] = weightTxt.text
-        userDetails["height"] = heightTxt.text
-        userDetails["m_id"]=UUID().uuidString
-        userDetails["bmi"] = calculateBMI()
+        validateTextFields()
+        
+        if userDetails["goal"] == nil{
+            showAlert()
+        }
+        else{
+            userDetails["weight"] = weightTxt.text
+            userDetails["height"] = heightTxt.text
+            userDetails["m_id"]=UUID().uuidString
+            userDetails["bmi"] = calculateBMI()
 
-        print("secondvc")
-        print(userDetails)
-        
-        sendDataToAPI()
-        
-        let resultsVC = ResultsViewController()
-        resultsVC.userDetails=userDetails
-        navigationController?.pushViewController(resultsVC, animated: true)
+            print("secondvc")
+            print(userDetails)
+            
+            sendDataToAPI()
+            
+            let resultsVC = ResultsViewController()
+            resultsVC.userDetails=userDetails
+            navigationController?.pushViewController(resultsVC, animated: true)
+        }
+    
     }
+    
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func validateTextFields() -> Bool {
+        let textFields: [UITextField] = [weightTxt, heightTxt]
+        
+        for textField in textFields {
+            if textField.text?.isEmpty ?? true {
+                showAlert()
+            }
+        }
+        return true
+    }
+        
+    private func showAlert() {
+            let alertController = UIAlertController(title: "Please Fill Out All Fields !!!", message: "Do not leave empty fields when submitting.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
     
     func calculateBMI()->Double{
         let weightText = weightTxt.text!
@@ -344,6 +389,7 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         vstack2.addArrangedSubview(hstack)
         vstack.addArrangedSubview(vstack2)
         view.addSubview(nextBtn)
+        view.addSubview(backBtn)
         view.addSubview(vstack)
         
         weightTxt.rightView = weightUnit
@@ -372,7 +418,9 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         lineViewAge.bottomAnchor.constraint(equalTo: heightTxt.bottomAnchor).isActive=true
         lineViewAge.heightAnchor.constraint(equalToConstant: 1).isActive=true
         
-        vstack2.topAnchor.constraint(equalTo: heightTxt.bottomAnchor, constant: 35).isActive=true
+//        heightTxt.topAnchor.constraint(equalTo: weightTxt.bottomAnchor, constant: 50).isActive=true
+        
+//        vstack2.topAnchor.constraint(equalTo: heightTxt.bottomAnchor, constant: 20).isActive=true
         
         hstack.topAnchor.constraint(equalTo: goalLabel.bottomAnchor,constant: 30).isActive=true
         hstack.leadingAnchor.constraint(equalTo: vstack2.leadingAnchor).isActive=true
@@ -380,16 +428,22 @@ class SecondGetStartedViewController: UIViewController, UITextFieldDelegate {
         
         nextBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         nextBtn.widthAnchor.constraint(equalToConstant: 400).isActive=true
-        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive=true
+        nextBtn.topAnchor.constraint(equalTo: vstack.bottomAnchor, constant: 20).isActive=true
         nextBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive=true
         nextBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive=true
         
-        vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 50).isActive=true
+        vstack.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 20).isActive=true
         vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true
         vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive=true
         
         goalLabel.heightAnchor.constraint(equalToConstant: 40).isActive=true
         goalLabel.widthAnchor.constraint(equalToConstant: 10).isActive=true
+        
+        backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
+   
         
         
     }

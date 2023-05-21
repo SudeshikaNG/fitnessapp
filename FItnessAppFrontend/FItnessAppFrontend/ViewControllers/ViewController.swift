@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         stack.distribution = .equalSpacing
         return stack
     }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

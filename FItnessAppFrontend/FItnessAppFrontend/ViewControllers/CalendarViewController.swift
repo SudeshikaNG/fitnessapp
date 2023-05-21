@@ -35,18 +35,6 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
         let navBar = UINavigationBar()
     
     let calendarView=UICalendarView()
-
-        let backBtn:UIButton={
-            let button=UIButton()
-            button.translatesAutoresizingMaskIntoConstraints=false
-            button.backgroundColor = .clear
-            button.setTitle("< Back", for: .normal)
-            button.contentHorizontalAlignment = .left
-            button.setTitleColor(.orange, for: .normal)
-            button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .thin)
-            return button
-
-        }()
     
     let titleLabel:UILabel={
         let label=UILabel()
@@ -90,6 +78,19 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
         stack.backgroundColor = .white
         stack.isLayoutMarginsRelativeArrangement = true
         return stack
+
+    }()
+    
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
 
     }()
 
@@ -174,7 +175,7 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showLogin))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -184,10 +185,10 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
         
-        @objc func showSettings(){
-            let profileVC = ProfileViewController()
-            navigationController?.pushViewController(profileVC, animated: true)
-        }
+    @objc func showLogin(){
+        let loginVC = LoginViewController()
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
 
     }
 

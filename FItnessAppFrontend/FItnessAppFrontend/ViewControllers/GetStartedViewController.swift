@@ -145,6 +145,19 @@ class GetStartedViewController: UIViewController {
             return image
         }()
     
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
+    
     @objc func genderSelected(_ sender:UIButton){
         sender.isSelected = !sender.isSelected
         
@@ -196,10 +209,18 @@ class GetStartedViewController: UIViewController {
         addConstraints()
         
         nextBtn.addTarget(self, action: #selector(navigate), for: .touchUpInside)
+        backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
     }
     
     @objc func navigate(){
+        
+        validateTextFields()
+        
+        if userDetails["gender"] == nil{
+            showAlert()
+        }
+        
         userDetails["name"] = nameTxt.text
         userDetails["age"] = ageTxt.text
         
@@ -210,6 +231,29 @@ class GetStartedViewController: UIViewController {
         secondGetStartedVC.userDetails = userDetails
         navigationController?.pushViewController(secondGetStartedVC, animated: true)
     }
+    
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func validateTextFields() -> Bool {
+        let textFields: [UITextField] = [nameTxt, ageTxt]
+        
+        for textField in textFields {
+            if textField.text?.isEmpty ?? true {
+                showAlert()
+            }
+        }
+        return true
+    }
+        
+    private func showAlert() {
+            let alertController = UIAlertController(title: "Please Fill Out All Fields !!!", message: "Do not leave empty fields when submitting.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
     
     func addComponents(){
         //view.addSubview(screenTitle)
@@ -222,6 +266,7 @@ class GetStartedViewController: UIViewController {
         hstack.addArrangedSubview(femaleCheckBoxBtn)
         vstack.addArrangedSubview(hstack)
         view.addSubview(nextBtn)
+        view.addSubview(backBtn)
         view.addSubview(vstack)
     }
     
@@ -248,13 +293,18 @@ class GetStartedViewController: UIViewController {
         
         nextBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         nextBtn.widthAnchor.constraint(equalToConstant: 400).isActive=true
-        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130).isActive=true
+        nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120).isActive=true
         nextBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive=true
         nextBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive=true
                 
-        vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 100).isActive=true
+        vstack.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 50).isActive=true
         vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true
         vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive=true
+        
+        backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
     }
     
     

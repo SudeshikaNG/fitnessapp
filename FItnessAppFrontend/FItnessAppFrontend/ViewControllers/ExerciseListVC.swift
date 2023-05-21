@@ -54,6 +54,19 @@ let vstack2:UIStackView={
         return image
         }()
     
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,8 +88,10 @@ let vstack2:UIStackView={
         configureTableView()
         
         calendarBtn.addTarget(self, action: #selector(navigateCalendar), for: .touchUpInside)
+        backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
     }
+    
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
         
@@ -147,6 +162,11 @@ let vstack2:UIStackView={
         navigationController?.pushViewController(calendarVC, animated: true)
     }
     
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
+    
     func addComponents(){
         vstack2.addArrangedSubview(calendarBtn)
 //        vstack2.addArrangedSubview(tableView)
@@ -154,6 +174,7 @@ let vstack2:UIStackView={
         view.addSubview(headImage)
         view.addSubview(vstack2)
         view.addSubview(tableView)
+        view.addSubview(backBtn)
     }
     
     func addConstraints(){
@@ -161,7 +182,7 @@ let vstack2:UIStackView={
         calendarBtn.heightAnchor.constraint(equalToConstant: 45).isActive=true
         
         headImage.heightAnchor.constraint(equalToConstant: view.bounds.size.height/4).isActive=true
-        headImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive=true
+        headImage.topAnchor.constraint(equalTo: backBtn.topAnchor, constant: -5).isActive=true
         headImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
         headImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
         
@@ -173,6 +194,12 @@ let vstack2:UIStackView={
 //        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
 //        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
 //        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive=true
+        
+        backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
+   
     }
     
     /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
@@ -197,7 +224,7 @@ let vstack2:UIStackView={
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showLogin()))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -207,9 +234,9 @@ let vstack2:UIStackView={
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
         
-        @objc func showSettings(){
-            let profileVC = ProfileViewController()
-            navigationController?.pushViewController(profileVC, animated: true)
+        @objc func showLogin(){
+            let loginVC = LoginViewController()
+            navigationController?.pushViewController(loginVC, animated: true)
         }
 }
 

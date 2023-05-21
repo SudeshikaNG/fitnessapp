@@ -120,6 +120,19 @@ class AddLoginDataViewController: UIViewController {
         return image
     }()
     
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //        view.backgroundColor = .systemMint
@@ -131,10 +144,13 @@ class AddLoginDataViewController: UIViewController {
         addConstraints()
         
         nextBtn.addTarget(self, action: #selector(navigate), for: .touchUpInside)
+        backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
     }
     
     @objc func navigate(){
+        
+        validateTextFields()
         
         userDetails["username"] = unTxt.text
         userDetails["password"] = pwTxt.text
@@ -147,6 +163,29 @@ class AddLoginDataViewController: UIViewController {
         navigationController?.pushViewController(getStartedVC, animated: true)
     }
     
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func validateTextFields() -> Bool {
+        let textFields: [UITextField] = [unTxt, pwTxt]
+        
+        for textField in textFields {
+            if textField.text?.isEmpty ?? true {
+                showAlert()
+            }
+        }
+        return true
+    }
+        
+    private func showAlert() {
+            let alertController = UIAlertController(title: "Please Fill Out All Fields !!!", message: "Do not leave empty fields when submitting.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
+    
     func addComponents(){
         //view.addSubview(screenTitle)
         vstack.addArrangedSubview(screenTitle)
@@ -156,6 +195,7 @@ class AddLoginDataViewController: UIViewController {
         vstack.addArrangedSubview(pwTxt)
         vstack.addArrangedSubview(hstack)
         view.addSubview(nextBtn)
+        view.addSubview(backBtn)
         view.addSubview(vstack)
     }
     
@@ -186,12 +226,17 @@ class AddLoginDataViewController: UIViewController {
         nextBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive=true
         nextBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive=true
         
-        vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 100).isActive=true
+        vstack.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 50).isActive=true
         vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true
         vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive=true
         
         bgImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
         bgImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
+        
+        backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
     }
     
     
@@ -210,7 +255,6 @@ class AddLoginDataViewController: UIViewController {
         
         func configureNavBar(){
             
-            
             view.addSubview(navBar)
             
             //navigationItem.titleView=appTitle
@@ -224,5 +268,6 @@ class AddLoginDataViewController: UIViewController {
             navBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive=true
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
+
 }
 

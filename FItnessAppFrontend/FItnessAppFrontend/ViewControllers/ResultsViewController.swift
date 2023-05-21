@@ -169,18 +169,6 @@ class ResultsViewController: UIViewController {
         
     }()
     
-    let backBtn:UIButton={
-        let button=UIButton()
-        button.translatesAutoresizingMaskIntoConstraints=false
-        button.backgroundColor = .orange
-        button.setTitle("Back", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .bold)
-        button.layer.cornerRadius=10
-        return button
-        
-    }()
-    
     let workoutBtn:UIButton={
         let button=UIButton()
         button.translatesAutoresizingMaskIntoConstraints=false
@@ -283,6 +271,19 @@ class ResultsViewController: UIViewController {
         return image
     }()
     
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -304,8 +305,8 @@ class ResultsViewController: UIViewController {
     }
     
     @objc func navigateBack(){
-        let secondGetStartedVC=SecondGetStartedViewController()
-        navigationController?.pushViewController(secondGetStartedVC, animated: true)
+
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func navigateExercise(){
@@ -389,7 +390,7 @@ class ResultsViewController: UIViewController {
         
         view.addSubview(vstack)
         //        vstack.bringSubviewToFront(workoutBtn)
-        view.addSubview(backBtn)
+        //view.addSubview(backBtn)
         
         //        view.addSubview(vstackBtns)
         
@@ -420,12 +421,10 @@ class ResultsViewController: UIViewController {
         workoutBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
         workoutBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
         
-        backBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
-        backBtn.widthAnchor.constraint(equalToConstant: 10).isActive=true
-        backBtn.topAnchor.constraint(equalTo: vstack.bottomAnchor, constant: 20).isActive=true
-        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20).isActive=true
-        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -250).isActive=true
-        
+//        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
+//        backBtn.topAnchor.constraint(equalTo: vstack.bottomAnchor, constant: 20).isActive=true
+//        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 25).isActive=true
+//        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -280).isActive=true
     }
     
     

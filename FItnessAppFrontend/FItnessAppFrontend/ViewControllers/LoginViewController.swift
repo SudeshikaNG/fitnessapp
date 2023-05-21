@@ -90,21 +90,10 @@ class LoginViewController: UIViewController {
             stack.spacing=50
             stack.distribution = .equalSpacing
             stack.backgroundColor = .black
-            stack.layoutMargins = UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50)
+            stack.layoutMargins = UIEdgeInsets(top: 10, left: 50, bottom: 100, right: 50)
             stack.isLayoutMarginsRelativeArrangement = true
             stack.alpha=0.9
             stack.layer.cornerRadius=5
-            return stack
-                
-        }()
-
-        let hstack:UIStackView={
-            let stack=UIStackView()
-            stack.translatesAutoresizingMaskIntoConstraints=false
-            stack.axis = .horizontal
-            stack.alignment = .center
-            stack.spacing=50
-            stack.distribution = .fillEqually
             return stack
                 
         }()
@@ -117,6 +106,19 @@ class LoginViewController: UIViewController {
                 image.image = .init(named: "login3")
                 return image
             }()
+    
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -129,10 +131,13 @@ class LoginViewController: UIViewController {
             addConstraints()
             
             loginBtn.addTarget(self, action: #selector(navigate), for: .touchUpInside)
+            backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
             
         }
         
         @objc func navigate(){
+            
+            validateTextFields()
             
             var userCred : [String:Any] = [:]
             userCred["un"] = unTxt.text
@@ -142,7 +147,30 @@ class LoginViewController: UIViewController {
             profileVC.userCred = userCred
             navigationController?.pushViewController(profileVC, animated: true)
         }
+    
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func validateTextFields() -> Bool {
+        let textFields: [UITextField] = [unTxt, pwTxt]
         
+        for textField in textFields {
+            if textField.text?.isEmpty ?? true {
+                showAlert()
+            }
+        }
+        return true
+    }
+        
+    private func showAlert() {
+            let alertController = UIAlertController(title: "Please Fill Out All Fields !!!", message: "Do not leave empty fields when submitting.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
+    
         func addComponents(){
             //view.addSubview(screenTitle)
             vstack.addArrangedSubview(screenTitle)
@@ -150,9 +178,10 @@ class LoginViewController: UIViewController {
             pwTxt.addSubview(lineViewPw)
             vstack.addArrangedSubview(unTxt)
             vstack.addArrangedSubview(pwTxt)
-            vstack.addArrangedSubview(hstack)
+            view.addSubview(backBtn)
             view.addSubview(loginBtn)
             view.addSubview(vstack)
+
         }
         
         
@@ -162,7 +191,7 @@ class LoginViewController: UIViewController {
             
             unTxt.widthAnchor.constraint(equalToConstant: 40).isActive=true
             
-            pwTxt.topAnchor.constraint(equalTo: unTxt.bottomAnchor,constant: 100).isActive=true
+//            pwTxt.topAnchor.constraint(equalTo: unTxt.bottomAnchor,constant: 100).isActive=true
             
             lineViewUn.leadingAnchor.constraint(equalTo: unTxt.leadingAnchor).isActive=true
             lineViewUn.trailingAnchor.constraint(equalTo: unTxt.trailingAnchor).isActive=true
@@ -174,20 +203,24 @@ class LoginViewController: UIViewController {
             lineViewPw.bottomAnchor.constraint(equalTo: pwTxt.bottomAnchor).isActive=true
             lineViewPw.heightAnchor.constraint(equalToConstant: 1).isActive=true
             
-            hstack.topAnchor.constraint(equalTo: pwTxt.bottomAnchor, constant: 50).isActive=true
-            
             loginBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
             loginBtn.widthAnchor.constraint(equalToConstant: 400).isActive=true
-            loginBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130).isActive=true
+            loginBtn.topAnchor.constraint(equalTo: vstack.bottomAnchor, constant: 30).isActive=true
             loginBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive=true
             loginBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive=true
                     
-            vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 100).isActive=true
+            vstack.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 50).isActive=true
             vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive=true
             vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive=true
             
             bgImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
             bgImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
+            
+            backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+            backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+            backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+            backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
+       
         }
         
         

@@ -45,6 +45,19 @@ class DailyExerciseListVC: UIViewController {
         return label
 
     }()
+    
+    let backBtn:UIButton={
+        let button=UIButton()
+        button.translatesAutoresizingMaskIntoConstraints=false
+        button.backgroundColor = .orange
+        button.setTitle("< Back", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.layer.cornerRadius=5
+        return button
+
+    }()
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -65,8 +78,15 @@ class DailyExerciseListVC: UIViewController {
             
     //        exercise=fetchData()//populate array with image list
             configureTableView()
+            
+            backBtn.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
         }
+    
+    @objc func navigateBack(){
+
+        navigationController?.popViewController(animated: true)
+    }
     
     func fetchDataFromApi(onCompletion: @escaping ([Exercise])->()){
         let ExType:String
@@ -134,11 +154,12 @@ class DailyExerciseListVC: UIViewController {
         view.addSubview(titleLabel)
             view.addSubview(vstack2)
             view.addSubview(tableView)
+        view.addSubview(backBtn)
         }
 
         func addConstraints(){
 
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive=true
+            titleLabel.topAnchor.constraint(equalTo: backBtn.bottomAnchor, constant: 5).isActive=true
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
 
@@ -147,6 +168,12 @@ class DailyExerciseListVC: UIViewController {
             vstack2.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
 
             tableView.topAnchor.constraint(equalTo: vstack2.bottomAnchor, constant: 5).isActive=true
+            
+            backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive=true
+            backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+            backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -320).isActive=true
+            backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
+       
         }
 
     /////////////////////////////////////////////////navbar////////////////////////////////////////////////////
@@ -171,7 +198,7 @@ class DailyExerciseListVC: UIViewController {
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showSettings))
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showLogin))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
@@ -181,10 +208,10 @@ class DailyExerciseListVC: UIViewController {
             navBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         }
         
-        @objc func showSettings(){
-            let profileVC = ProfileViewController()
-            navigationController?.pushViewController(profileVC, animated: true)
-        }
+    @objc func showLogin(){
+        let loginVC = LoginViewController()
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
 
     }
 
