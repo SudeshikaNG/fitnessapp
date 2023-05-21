@@ -337,8 +337,8 @@ class ResultsViewController: UIViewController {
             return
         }
         
-//        let bmiRounded = ( bmi * 100).rounded()/100
-//        bmiValLabel.text="\(bmiRounded)"
+        let bmiRounded = ( bmi * 100).rounded()/100
+        bmiValLabel.text="\(bmiRounded)"
         weightValLabel.text="\(weight)"
         heightValLabel.text="\(height)"
 

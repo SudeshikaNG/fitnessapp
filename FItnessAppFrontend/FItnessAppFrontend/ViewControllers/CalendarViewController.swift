@@ -88,7 +88,7 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
         button.setTitle("< Back", for: .normal)
         button.contentHorizontalAlignment = .center
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font=UIFont.systemFont(ofSize: 18, weight: .bold)
+        button.titleLabel?.font=UIFont.systemFont(ofSize: 15, weight: .bold)
         button.layer.cornerRadius=5
         return button
 
@@ -127,30 +127,36 @@ class CalendarViewController: UIViewController, UICalendarSelectionSingleDateDel
     }
 
     func addComponents(){
-        vstack.addArrangedSubview(backBtn)
+        
         vstack.addArrangedSubview(tipImage)
         vstack.addArrangedSubview(titleLabel)
         hstack.addArrangedSubview(calendarView)
+        view.addSubview(backBtn)
         view.addSubview(vstack)
         view.addSubview(hstack)
     }
 
     func addConstraints(){
         
-        vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive=true
+        vstack.topAnchor.constraint(equalTo: backBtn.bottomAnchor, constant: 5).isActive=true
         
         hstack.topAnchor.constraint(equalTo: vstack.bottomAnchor).isActive=true
         hstack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive=true
         hstack.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive=true
         hstack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive=true
         
-        tipImage.topAnchor.constraint(equalTo: backBtn.bottomAnchor).isActive=true
+        tipImage.topAnchor.constraint(equalTo: vstack.topAnchor).isActive=true
         tipImage.heightAnchor.constraint(equalToConstant: view.bounds.size.height/5).isActive=true
         tipImage.widthAnchor.constraint(equalToConstant: view.bounds.size.width).isActive=true
         tipImage.bottomAnchor.constraint(equalTo: titleLabel.topAnchor).isActive=true
         
         titleLabel.leadingAnchor.constraint(equalTo: vstack.leadingAnchor).isActive=true
         titleLabel.trailingAnchor.constraint(equalTo: vstack.trailingAnchor).isActive=true
+        
+        backBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive=true
+        backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive=true
+        backBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -300).isActive=true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive=true
   }
 
     /////////////////////////////////////////////////navbar////////////////////////////////////////////////////

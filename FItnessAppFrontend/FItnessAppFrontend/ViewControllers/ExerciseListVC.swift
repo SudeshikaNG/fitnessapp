@@ -224,7 +224,7 @@ let vstack2:UIStackView={
             let titleItem=UIBarButtonItem(customView: screenHeading)
             navigationItem.leftBarButtonItem=titleItem
             //navBar.setItems([navigationItem], animated: false)
-            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showLogin()))
+            navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "person.circle.fill"), style: .plain, target: self, action: #selector(showLogin))
             navBar.translatesAutoresizingMaskIntoConstraints=false
             navBar.heightAnchor.constraint(equalToConstant: 44).isActive=true
             navBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive=true
