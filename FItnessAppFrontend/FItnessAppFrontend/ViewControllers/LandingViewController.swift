@@ -101,7 +101,7 @@ class LandingViewController: UIViewController {
             registerBtn.heightAnchor.constraint(equalToConstant: 50).isActive=true
             registerBtn.topAnchor.constraint(equalTo: loginBtn.bottomAnchor,constant: 50).isActive=true
             
-            vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25).isActive=true
+            vstack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive=true
             vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive=true
             vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive=true
             
